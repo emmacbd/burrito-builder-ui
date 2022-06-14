@@ -32,12 +32,13 @@ class OrderForm extends Component {
 
   handleIngredientChange = (event) => {
     event.preventDefault()
-    if (this.state.ingredients > 0) {
-      this.setState({ ingredients: [...this.state.ingredients, event.target.name] })
+    if (this.state.ingredients < 0) {
+      this.setState({ ingredients:[ event.target.name]})
     } else {
-      this.setState({ ingredients: event.target.name })
+      this.setState({ ingredients: [...this.state.ingredients, event.target.name] })
     }
   }
+
 
   handleNameChange = (event) => {
 
