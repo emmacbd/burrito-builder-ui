@@ -1,3 +1,5 @@
+import OrderForm from "../../src/components/OrderForm/OrderForm"
+
 describe('form input', () => {
   beforeEach(() => {
     cy.intercept('http://localhost:3001/api/v1/orders', { fixture: 'sampleorders.json' })
@@ -28,19 +30,28 @@ describe('form input', () => {
     cy.get('.order-submit')
 
   })
+
+  it('Should throw an error if user tries to submit order without filling out name', () => {
+    cy.get('button[name="queso fresco"]').click()
+    cy.get('button[name="steak"]').click()
+    cy.get('.order-submit').click()
+    cy.get('.error-message').contains('Please Add Name to Your Order!')
+    
+  })
+
+
   it('Should be able to submit an order after filling out form and clicking submit order button', () => {
+    cy.intercept('POST', 'http://localhost:3001/api/v1/orders', { fixture: 'order.json' })
     cy.get('input[type="text"]')
       .type('Tina Belcher')
       .should('have.value', 'Tina Belcher')
     cy.get('button[name="queso fresco"]').click()
     cy.get('button[name="steak"]').click()
-
+    cy.get('.order-submit').click()
+    cy.get('.order').last().contains('Tina Belcher')
   })
 
 
 })
 
 
-
-// .order-list - class name for selected ingredients list 
-//.order-submit order button form
