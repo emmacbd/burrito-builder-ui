@@ -1,7 +1,8 @@
 import React from 'react';
 import './Orders.css';
 
-const Orders = props => {
+const Orders = (props) => {
+
   const orderEls = props.orders.map(order => {
     return (
       <div className="order">
@@ -17,7 +18,7 @@ const Orders = props => {
 
   return (
     <section>
-      { orderEls.length ? orderEls : <p>No orders yet!</p> }
+      {orderEls.length ? orderEls : <p>No orders yet!</p>}
     </section>
   )
 }
