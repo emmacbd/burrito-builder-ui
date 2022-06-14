@@ -46,7 +46,7 @@ class OrderForm extends Component {
 
 
   clearInputs = () => {
-    this.setState({ name: '', ingredients: [], error:'' });
+    this.setState({ name: '', ingredients: [], error: '' });
   }
 
   render() {
@@ -71,9 +71,9 @@ class OrderForm extends Component {
 
         {ingredientButtons}
 
-        <p>Order: {this.state.ingredients.join(', ') || 'Nothing selected'}</p>
+        <p className="order-list">Order: {this.state.ingredients.join(', ') || 'Nothing selected'}</p>
         {this.state.error && <p>{this.state.error}</p>}
-        <button onClick={e => this.handleSubmit(e)}>
+        <button className="order-submit" onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
       </form>

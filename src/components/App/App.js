@@ -26,7 +26,7 @@ class App extends Component {
         if(result.id){
           this.setState({ orders: [...this.state.orders, result], error:'' })
         } else {
-          this.setState({orders:[...this.state.orders], error: 'Please add a name to your order!'})
+          this.setState({orders:[...this.state.orders], error: 'Please try again!'})
         }
       
       })
