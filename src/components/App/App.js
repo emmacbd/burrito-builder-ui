@@ -8,7 +8,8 @@ class App extends Component {
   constructor(props) {
     super();
     this.state = {
-      orders: []
+      orders: [],
+      error:''
     }
   }
 
@@ -21,7 +22,14 @@ class App extends Component {
 
   sendOrder = (newOrder) => {
     postOrder(newOrder)
-      .then(result => this.setState({ orders: [...this.state.orders, result] }))
+      .then(result => {
+        if(result.id){
+          this.setState({ orders: [...this.state.orders, result], error:'' })
+        } else {
+          this.setState({orders:[...this.state.orders], error: 'Please add a name to your order!'})
+        }
+      
+      })
   }
 
 

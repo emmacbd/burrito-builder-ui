@@ -6,35 +6,47 @@ class OrderForm extends Component {
     this.props = props;
     this.state = {
       name: '',
-      ingredients: []
+      ingredients: [],
+      error: ''
     };
   }
 
 
   handleSubmit = e => {
     e.preventDefault();
-    const newOrder = {
-      id: Date.now(),
-      ...this.state
+    if (!this.state.name) {
+      this.setState({ error: 'Please Add Name to Your Order!' })
+    } else if (this.state.name && this.state.ingredients.length === 0) {
+      this.setState({ error: 'Please add at least one ingredient to your burrito!' })
+    } else {
+      const newOrder = {
+        id: Date.now(),
+        ...this.state
+      }
+      this.props.sendOrder(newOrder)
+      this.clearInputs();
     }
-    this.props.sendOrder(newOrder)
-    this.clearInputs();
   }
 
 
 
   handleIngredientChange = (event) => {
     event.preventDefault()
-    this.setState({ [event.target.name]: event.target.value })
+    if (this.state.ingredients > 0) {
+      this.setState({ ingredients: [...this.state.ingredients, event.target.name] })
+    } else {
+      this.setState({ ingredients: event.target.name })
+    }
   }
 
   handleNameChange = (event) => {
+
     this.setState({ [event.target.name]: event.target.value })
   }
 
 
   clearInputs = () => {
-    this.setState({ name: '', ingredients: [] });
+    this.setState({ name: '', ingredients: [], error:'' });
   }
 
   render() {
@@ -60,7 +72,7 @@ class OrderForm extends Component {
         {ingredientButtons}
 
         <p>Order: {this.state.ingredients.join(', ') || 'Nothing selected'}</p>
-
+        {this.state.error && <p>{this.state.error}</p>}
         <button onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
